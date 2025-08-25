@@ -136,23 +136,74 @@ function openCart()  { document.getElementById("cart").classList.remove("hidden"
 function closeCart() { document.getElementById("cart").classList.add("hidden");   document.getElementById("overlay").classList.add("hidden");   document.body.classList.remove("noscroll"); }
 function toggleCart() { const isHidden = document.getElementById("cart").classList.contains("hidden"); isHidden ? openCart() : closeCart(); }
 
+// --- Slideshow ---
+let currentSlide = 0;
+let slideInterval;
+
+function renderFeaturedSlides() {
+  const featured = document.getElementById("featured-slides");
+  if (!featured) return;
+
+  featured.innerHTML = "";
+
+  Object.keys(products).forEach(id => {
+    const p = products[id];
+    const slide = document.createElement("div");
+    slide.className = "slide";
+    slide.innerHTML = `
+      <img src="${p.image}" alt="${p.name}">
+      <div class="slide-content">
+        <h2>${p.name}</h2>
+        <p>${p.price} kr</p>
+        <a href="product.html?id=${id}">Se mer</a>
+      </div>
+    `;
+    featured.appendChild(slide);
+  });
+
+  updateSlidePosition();
+  startSlideShow();
+}
+
+function updateSlidePosition() {
+  const slides = document.querySelector(".slides");
+  if (slides) {
+    slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+  }
+}
+
+function nextSlide() {
+  const total = document.querySelectorAll(".slide").length;
+  currentSlide = (currentSlide + 1) % total;
+  updateSlidePosition();
+}
+
+function prevSlide() {
+  const total = document.querySelectorAll(".slide").length;
+  currentSlide = (currentSlide - 1 + total) % total;
+  updateSlidePosition();
+}
+
+function startSlideShow() {
+  clearInterval(slideInterval);
+  slideInterval = setInterval(nextSlide, 5000);
+}
+
 // --- Init ---
 document.addEventListener("DOMContentLoaded", () => {
   loadCart();
 
-  // ✅ Storleksknappar: aktiv + pop-animation
+  // Storleksknappar
   const sizeWrap = document.getElementById("size-options");
   if (sizeWrap) {
     const buttons = Array.from(sizeWrap.querySelectorAll(".size-btn"));
     buttons.forEach(btn => {
       btn.addEventListener("click", () => {
         buttons.forEach(b => { b.classList.remove("active","pop"); b.setAttribute("aria-pressed","false"); });
-        // Force reflow så vi kan trigga pop igen
         void btn.offsetWidth;
         btn.classList.add("active","pop");
         btn.setAttribute("aria-pressed","true");
       });
-      // tangentbord (Enter/Space)
       btn.addEventListener("keydown", (e) => {
         if (e.key === "Enter" || e.key === " ") { e.preventDefault(); btn.click(); }
       });
@@ -196,7 +247,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Checkout: rendera orderöversikten inkl. bilder
+  // Checkout: rendera orderöversikten
   const checkoutList = document.getElementById("checkout-cart-list");
   const checkoutTotal = document.getElementById("checkout-total");
   if (checkoutList && checkoutTotal) {
@@ -234,8 +285,10 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
   }
+
+  // Start slideshow på index
+  renderFeaturedSlides();
 });
 
 // Stäng kundvagn med Escape
 document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeCart(); });
-
