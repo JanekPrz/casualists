@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Produkt - Casual Hooligan</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <header>
+    <img src="ChatGPT Image 22 aug. 2025 13_20_30.png" alt="Casual Hooligan Logo" class="logo" />
+    <h1>Casual Hooligan</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Hem</a></li>
+        <li><a href="#">Produkter</a></li>
+        <li><a href="#">Om Oss</a></li>
+        <li><a href="#">Kontakt</a></li>
+      </ul>
+    </nav>
+    <button class="cart-icon" onclick="toggleCart()">🛒 <span id="cart-count">0</span></button>
+  </header>
+
+  <main class="product-page">
+    <img id="product-image" src="" alt="Produktbild" class="product-image"/>
+    <div class="product-details">
+      <h2 id="product-name"></h2>
+      <p id="product-price"></p>
+      <p id="product-description"></p>
+
+      <!-- ✅ Storleksknappar -->
+      <div class="size-block">
+        <label class="size-label">Storlek:</label>
+        <div class="size-options" id="size-options" role="group" aria-label="Välj storlek">
+          <button type="button" class="size-btn" data-size="S" aria-pressed="false">S</button>
+          <button type="button" class="size-btn active" data-size="M" aria-pressed="true">M</button>
+          <button type="button" class="size-btn" data-size="L" aria-pressed="false">L</button>
+          <button type="button" class="size-btn" data-size="XL" aria-pressed="false">XL</button>
+        </div>
+      </div>
+
+      <button id="add-to-cart-btn">Lägg i kundvagn</button>
+    </div>
+  </main>
+
+  <div id="overlay" class="overlay hidden" onclick="closeCart()"></div>
+
+  <!-- Kundvagn -->
+  <aside class="cart hidden" id="cart" aria-hidden="true" aria-labelledby="cart-title">
+    <div class="cart-header">
+      <h2 id="cart-title">Kundvagn</h2>
+      <button class="close-cart" aria-label="Stäng kundvagn" onclick="closeCart()">❌</button>
+    </div>
+    <ul id="cart-list"></ul>
+    <p id="cart-total">Totalt: 0 kr</p>
+    <div class="cart-actions">
+      <button id="clear-cart" class="btn-secondary">Töm kundvagn</button>
+      <button id="checkout" class="btn-primary">Till Kassan</button>
+    </div>
+  </aside>
+
+  <footer>
+    <p>&copy; 2025 Casual Hooligan. Alla rättigheter förbehållna.</p>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // Ladda produkt och koppla knappar
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get("id");
+
+    if (products[productId]) {
+      const p = products[productId];
+      document.getElementById("product-image").src = p.image;
+      document.getElementById("product-image").alt = p.name;
+      document.getElementById("product-name").textContent = p.name;
+      document.getElementById("product-price").textContent = p.price + " kr";
+      document.getElementById("product-description").textContent = p.description;
+
+      // Lägg i kundvagn med vald storlek + flygande bild
+      document.getElementById("add-to-cart-btn").addEventListener("click", () => {
+        const active = document.querySelector(".size-btn.active");
+        const size = active ? active.getAttribute("data-size") : "M";
+        const img = document.getElementById("product-image");
+        addToCart(productId, size, 1, img);
+      });
+    } else {
+      document.querySelector(".product-page").innerHTML = "<p>Produkten hittades inte.</p>";
+    }
+  </script>
+</body>
+</html>

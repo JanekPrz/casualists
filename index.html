@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5RM576QK');</script>
+<!-- End Google Tag Manager -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Casual Hooligan</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5RM576QK"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+  <header>
+    <img src="ChatGPT Image 22 aug. 2025 13_20_30.png" alt="Casual Hooligan Logo" class="logo" />
+    <h1>Casual Hooligan</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Hem</a></li>
+        <li><a href="#">Produkter</a></li>
+        <li><a href="#">Om Oss</a></li>
+        <li><a href="#">Kontakt</a></li>
+      </ul>
+    </nav>
+    <button class="cart-icon" aria-label="Öppna kundvagn" onclick="toggleCart()">
+      🛒 <span id="cart-count" aria-live="polite">0</span>
+    </button>
+  </header>
+
+  <main>
+    <section class="products">
+      <h2>Våra kläder</h2>
+      <div class="product-grid" id="product-list">
+        <!-- Produkter laddas in med JavaScript -->
+      </div>
+    </section>
+  </main>
+
+  <div id="overlay" class="overlay hidden" onclick="closeCart()" aria-hidden="true"></div>
+
+  <!-- Kundvagn -->
+  <aside class="cart hidden" id="cart" aria-hidden="true" aria-labelledby="cart-title">
+    <div class="cart-header">
+      <h2 id="cart-title">Kundvagn</h2>
+      <button class="close-cart" aria-label="Stäng kundvagn" onclick="closeCart()">❌</button>
+    </div>
+    <ul id="cart-list"></ul>
+    <p id="cart-total">Totalt: 0 kr</p>
+    <div class="cart-actions">
+      <button id="clear-cart" class="btn-secondary">Töm kundvagn</button>
+      <button id="checkout" class="btn-primary">Till Kassan</button>
+    </div>
+  </aside>
+
+  <footer>
+    <p>&copy; 2025 Casual Hooligan. Alla rättigheter förbehållna.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
